@@ -6,19 +6,19 @@ parse_function <- function (x){
   json <- ndjson::stream_in(x) %>% 
     filter(lang=="en") %>% 
     distinct(id_str,.keep_all = T) %>%
-    mutate(  
-      quoted_status.coordinates.coordinates.0= ifelse(is.null(.$quoted_status.coordinates.coordinates.0), NA, .$quoted_status.coordinates.coordinates.0),
-      quoted_status.coordinates.coordinates.1= ifelse(is.null(.$quoted_status.coordinates.coordinates.1), NA, .$quoted_status.coordinates.coordinates.1),
-      retweeted_status.coordinates.coordinates.0= ifelse(is.null(.$retweeted_status.coordinates.coordinates.0), NA, .$retweeted_status.coordinates.coordinates.0),
-      retweeted_status.coordinates.coordinates.1= ifelse(is.null(.$retweeted_status.coordinates.coordinates.1), NA, .$retweeted_status.coordinates.coordinates.1),
-      coordinates.coordinates.0= ifelse(is.null(.$coordinates.coordinates.0), NA, .$coordinates.coordinates.0),
-      coordinates.coordinates.1= ifelse(is.null(.$coordinates.coordinates.1), NA, .$coordinates.coordinates.1),
-      coordinates.type= ifelse(is.null(.$coordinates.type), NA, .$coordinates.type),
-      withheld_in_countries.0= ifelse(is.null(.$withheld_in_countries.0), NA, .$withheld_in_countries.0),
-      quoted_status.extended_tweet.full_text= ifelse(is.null(.$quoted_status.extended_tweet.full_text), NA, .$quoted_status.extended_tweet.full_text),
-      retweeted_status.extended_tweet.full_text= ifelse(is.null(.$retweeted_status.extended_tweet.full_text), NA, .$retweeted_status.extended_tweet.full_text),
-      extended_tweet.full_text= ifelse(is.null(.$extended_tweet.full_text), NA, .$extended_tweet.full_text)
-      ) %>%
+    mutate(
+      quoted_status.coordinates.coordinates.0 = if ("quoted_status.coordinates.coordinates.0" %in% names(.)){return(quoted_status.coordinates.coordinates.0)}else{return(NA)},
+      quoted_status.coordinates.coordinates.1= if ("quoted_status.coordinates.coordinates.1" %in% names(.)){return(quoted_status.coordinates.coordinates.1)}else{return(NA)},
+      retweeted_status.coordinates.coordinates.0= if ("retweeted_status.coordinates.coordinates.0" %in% names(.)){return(retweeted_status.coordinates.coordinates.0)}else{return(NA)},
+      retweeted_status.coordinates.coordinates.1= if ("retweeted_status.coordinates.coordinates.1" %in% names(.)){return(retweeted_status.coordinates.coordinates.1)}else{return(NA)},
+      coordinates.coordinates.0= if ("coordinates.coordinates.0" %in% names(.)){return(coordinates.coordinates.0)}else{return(NA)},
+      coordinates.coordinates.1= if ("coordinates.coordinates.1" %in% names(.)){return(coordinates.coordinates.1)}else{return(NA)},
+      coordinates.type= if ("coordinates.type" %in% names(.)){return(coordinates.type)}else{return(NA)},
+      withheld_in_countries.0= if ("withheld_in_countries.0" %in% names(.)){return(withheld_in_countries.0)}else{return(NA)},
+      quoted_status.extended_tweet.full_text= if ("quoted_status.extended_tweet.full_text" %in% names(.)){return(quoted_status.extended_tweet.full_text)}else{return(NA)},
+      retweeted_status.extended_tweet.full_text= if ("retweeted_status.extended_tweet.full_text" %in% names(.)){return(retweeted_status.extended_tweet.full_text)}else{return(NA)},
+      extended_tweet.full_text= if ("extended_tweet.full_text" %in% names(.)){return(extended_tweet.full_text)}else{return(NA)}
+    ) %>%
     select(text,
            created_at,
            id,
