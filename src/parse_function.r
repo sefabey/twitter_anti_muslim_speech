@@ -17,7 +17,17 @@ parse_function <- function (x){
       withheld_in_countries.0= if ("withheld_in_countries.0" %in% names(.)){return(withheld_in_countries.0)}else{return(NA)},
       quoted_status.extended_tweet.full_text= if ("quoted_status.extended_tweet.full_text" %in% names(.)){return(quoted_status.extended_tweet.full_text)}else{return(NA)},
       retweeted_status.extended_tweet.full_text= if ("retweeted_status.extended_tweet.full_text" %in% names(.)){return(retweeted_status.extended_tweet.full_text)}else{return(NA)},
-      extended_tweet.full_text= if ("extended_tweet.full_text" %in% names(.)){return(extended_tweet.full_text)}else{return(NA)}
+      extended_tweet.full_text= if ("extended_tweet.full_text" %in% names(.)){return(extended_tweet.full_text)}else{return(NA)},
+      place.name= if ("place.name" %in% names(.)){return(place.name)}else{return(NA)},
+      quoted_status.place.name= if ("quoted_status.place.name" %in% names(.)){return(quoted_status.place.name)}else{return(NA)},
+      place.country= if ("place.country" %in% names(.)){return(place.country)}else{return(NA)},
+      quoted_status.place.country= if ("quoted_status.place.country" %in% names(.)){return(quoted_status.place.country)}else{return(NA)},
+      quoted_status.place.country_code= if ("quoted_status.place.country_code" %in% names(.)){return(quoted_status.place.country_code)}else{return(NA)},
+      place.country_code= if ("place.country_code" %in% names(.)){return(place.country_code)}else{return(NA)},
+      retweeted_status.place.name= if ("retweeted_status.place.name" %in% names(.)){return(retweeted_status.place.name)}else{return(NA)},
+      retweeted_status.place.country= if ("retweeted_status.place.country" %in% names(.)){return(retweeted_status.place.country)}else{return(NA)},
+      retweeted_status.place.country_code= if ("retweeted_status.place.country_code" %in% names(.)){return(retweeted_status.place.country_code)}else{return(NA)},
+      quoted_status.entities.urls.0.expanded_url= if ("quoted_status.entities.urls.0.expanded_url" %in% names(.)){return(quoted_status.entities.urls.0.expanded_url)}else{return(NA)}
     ) %>%
     select(text,
            created_at,
@@ -113,8 +123,8 @@ parse_function <- function (x){
       !is.na(retweeted_status.extended_tweet.full_text) ~ retweeted_status.extended_tweet.full_text,
       #!is.na(quoted_status.extended_tweet.full_text) ~ quoted_status.extended_tweet.full_text,
       TRUE ~ text)) %>% 
-    select(text_real, id_str, everything()) %>% 
-    filter(str_detect(string = text_real, pattern = regex('muslim|islam',ignore_case = T)))
+    select(text_real, id_str, everything())
+    # filter(str_detect(string = text_real, pattern = regex('muslim|islam',ignore_case = T)))
   write_csv(json, path = paste0(str_sub(x,end = -7), ".csv"))
   gc()
   }else {
