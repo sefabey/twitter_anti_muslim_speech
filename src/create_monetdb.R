@@ -17,7 +17,7 @@ con <- dbConnect(MonetDBLite::MonetDBLite(), dbdir)
 
 temp_data <- read_csv("../Desktop/temp/muslim_csv/filtered_tweets2017-03-20-11-32.csv",col_types = "cccciclc?ddcccciilcccciiiccclciilccilciccclddcccccciiiccciiillccciccclddccciiccciiicccilclccicicccc")
 
-dbWriteTable(con, "muslim",temp_data, append=T) #connection, table name in the databse, local tibble
+dbWriteTable(con, "muslim",temp_data, append=T) #connection, table name in the database, local tibble
 
 dbReadTable(con,"muslim") %>% 
   select(contains("created_at")) %>% 

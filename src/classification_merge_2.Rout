@@ -1,0 +1,54 @@
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # load packages 
+> library(tidyverse)
+── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+[32m✔[39m [34mggplot2[39m 3.0.0     [32m✔[39m [34mpurrr  [39m 0.2.5
+[32m✔[39m [34mtibble [39m 1.4.2     [32m✔[39m [34mdplyr  [39m 0.7.6
+[32m✔[39m [34mtidyr  [39m 0.8.1     [32m✔[39m [34mstringr[39m 1.3.1
+[32m✔[39m [34mreadr  [39m 1.1.1     [32m✔[39m [34mforcats[39m 0.3.0
+── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m masks [34mstats[39m::filter()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m    masks [34mstats[39m::lag()
+> library(MonetDBLite)
+> library(DBI) 
+> 
+> #Connect to Monet Database
+> dbdir <- "~/muslim_islam/muslim_monet_database" #directory of the Monet database, should be empty
+> con <- dbConnect(MonetDBLite::MonetDBLite(), dbdir)
+> 
+> # check if tables actually exists
+> dbExistsTable(con, "muslim")
+[1] TRUE
+> dbListTables(con)
+[1] "muslim"
+> 
+> # query column names
+> muslim_columns <- tbl(con,"muslim") %>% 
++   colnames() %>% 
++   as.tibble()
+> 
+> # collect all rows and selected columns into memory
+> a <- tbl(con,"muslim") %>% 
++   select(text_long, id_str, timestamp_ms,user.screen_name, quoted_status.id_str, retweeted_status.id_str,in_reply_to_status_id_str) %>% 
++   # as.data.frame() %>% 
++   # sample_n(100000) %>% 
++   # as.tibble() %>% 
++   collect()
+
+Execution halted
